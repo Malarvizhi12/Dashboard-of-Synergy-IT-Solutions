@@ -592,11 +592,19 @@ with col1:
 
     fig = px.bar(
         service_counts,
-        x="Category",
-        y="Count",
+        x="Count",
+        y="Category",
+        orientation="h",
+        text="Count",
         color="Category",
         color_discrete_sequence=SERVICE_COLORS,
-        title="Service Offering Coverage by Category"
+        title="Documented Services by Category"
+    )
+
+    fig.update_traces(
+        textposition="outside",
+        marker_line_width=0,
+        opacity=0.9
     )
 
     fig.update_layout(
@@ -604,12 +612,13 @@ with col1:
         paper_bgcolor="white",
         plot_bgcolor="white",
         showlegend=False,
-        margin=dict(l=30, r=20, t=60, b=100)
-    )
-
-    fig.update_traces(
-        marker_line_width=0,
-        opacity=0.9
+        xaxis_title="Number of Documented Services",
+        yaxis_title="Service Category",
+        xaxis=dict(
+            dtick=1,
+            range=[0, max(service_counts["Count"].max() + 1, 2)]
+        ),
+        margin=dict(l=30, r=50, t=60, b=50)
     )
 
     st.plotly_chart(fig, width="stretch")
@@ -638,7 +647,6 @@ with col2:
     )
 
     st.plotly_chart(fig, width="stretch")
-
 # =========================================================
 # TECHNOLOGY
 # =========================================================
