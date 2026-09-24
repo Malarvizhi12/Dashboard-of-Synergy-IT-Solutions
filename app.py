@@ -705,11 +705,19 @@ industry_counts = (
 
 fig = px.bar(
     industry_counts,
-    x="Industry",
-    y="Count",
+    x="Count",
+    y="Industry",
+    orientation="h",
+    text="Count",
     color="Industry",
     color_discrete_sequence=INDUSTRY_COLORS,
     title="Documented Industry Coverage"
+)
+
+fig.update_traces(
+    textposition="outside",
+    marker_line_width=0,
+    opacity=0.9
 )
 
 fig.update_layout(
@@ -717,16 +725,16 @@ fig.update_layout(
     paper_bgcolor="white",
     plot_bgcolor="white",
     showlegend=False,
-    margin=dict(l=30, r=20, t=60, b=100)
-)
-
-fig.update_traces(
-    marker_line_width=0,
-    opacity=0.9
+    xaxis_title="Number of Documented Entries",
+    yaxis_title="Industry",
+    xaxis=dict(
+        dtick=1,
+        range=[0, max(industry_counts["Count"].max() + 1, 2)]
+    ),
+    margin=dict(l=30, r=50, t=60, b=50)
 )
 
 st.plotly_chart(fig, width="stretch")
-
 # =========================================================
 # SUCCESS STORIES
 # =========================================================
